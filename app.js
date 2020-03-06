@@ -20,22 +20,6 @@ const ope = require('./bdd/operation');
 
 ope.genRandStr();
 
-
-let routerFront = new Router();
-
-let serverFront = http.createServer(function onRequest(req, res) {
-    routerFront(req, res, finalhandler(req, res))
-});
-
-routerFront.route("*", function (req, res) {
-    res._sendLocalDataFile('./dist/index.html')
-});
-
-const portFront = 3000;
-serverFront.listen(portFront, () => {
-    console.log(`ServerFront running at :${portFront}/`)
-});
-
 let serverBack = http.createServer(function onRequest(req, res) {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -54,6 +38,11 @@ let serverBack = http.createServer(function onRequest(req, res) {
 
 
 const con = moduleCo.connectWith('admin', 'toto');
+
+router.Route('/')
+    .get(function (req, res) {
+        res._sendLocalDataFile( path.resolve('dist', 'chocoAngular', 'index.html') );
+    });
 
 router.use(function (req, res, next) {
     const connexionUser = router.route('/connexion');
