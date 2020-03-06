@@ -41,7 +41,7 @@ const con = moduleCo.connectWith('admin', 'toto');
 
 router.Route('/')
     .get(function (req, res) {
-        res._sendLocalDataFile( path.resolve('dist', 'chocoAngular', 'index.html') );
+        res.redirectTo( path.resolve('dist', 'chocoAngular', 'index.html') );
     });
 
 router.use(function (req, res, next) {
