@@ -1,20 +1,15 @@
 {
-  "name": "app-web",
-  "version": "1.0.0",
+  "name": "archichoco",
+  "version": "0.0.0",
   "private": true,
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "compression": "^1.7.4",
-    "cookie-parser": "~1.4.4",
+    "bcrypt": "^4.0.0",
     "debug": "~2.6.9",
-    "express": "^4.16.4",
     "finalhandler": "^1.1.2",
-    "fs": "0.0.1-security",
-    "http": "0.0.0",
     "http-errors": "~1.6.3",
     "jsonwebtoken": "^8.5.1",
     "keygenerator": "^1.0.4",

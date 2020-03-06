@@ -1,7 +1,6 @@
 const http = require('http');
 const finalhandler = require('finalhandler');
 const Router = require('router');
-
 let router = new Router();
 
 const moduleCo = require('./bdd/connector');
@@ -36,7 +35,6 @@ let server = http.createServer(function onRequest(req, res) {
     }
     router(req, res, finalhandler(req, res))
 });
-
 
 
 const con = moduleCo.connectWith('admin', 'toto');
@@ -96,20 +94,3 @@ const port = 8085;
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
-
-const express = require('express');
-const path = require('path');
-
-const app = express();
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-});
-
-const portFront = process.env.PORT || 3000;
-app.set('port', port);
-
-const serverFront = http.createServer(app);
-serverFront.listen(portFront, () => console.log('running'));
