@@ -1,16 +1,15 @@
 {
-  "name": "archichoco",
-  "version": "0.0.0",
+  "name": "app-web",
+  "version": "1.0.0",
   "private": true,
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "bcrypt": "^4.0.0",
     "debug": "~2.6.9",
     "finalhandler": "^1.1.2",
-    "http-errors": "~1.6.3",
+    "http": "0.0.0",
     "jsonwebtoken": "^8.5.1",
     "keygenerator": "^1.0.4",
     "morgan": "~1.9.1",
