@@ -1,4 +1,7 @@
 const http = require('http');
+const path = require('path');
+const express = require('express');
+
 const finalhandler = require('finalhandler');
 const Router = require('router');
 let router = new Router();
@@ -39,9 +42,9 @@ let serverBack = http.createServer(function onRequest(req, res) {
 
 const con = moduleCo.connectWith('admin', 'toto');
 
-router.Route('/')
+router.route('/')
     .get(function (req, res) {
-        res.redirectTo( path.resolve('dist', 'chocoAngular', 'index.html') );
+        res._sendLocalDataFile( path.resolve('dist', 'chocoAngular', 'index.html') );
     });
 
 router.use(function (req, res, next) {
@@ -92,10 +95,23 @@ router.use(function (req, res, next) {
     next()
 });
 
-
 // const hostname = 'localhost';
 const port = 8085;
 
 serverBack.listen(port, () => {
     console.log(`Server running on :${port}/`);
 });
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/dist/chocoAngular/index.html'));
+});
+
+const portFront = process.env.PORT || 3000;
+app.set('port', port);
+
+const serverFront = http.createServer(app);
+serverFront.listen(portFront, () => console.log('running'));

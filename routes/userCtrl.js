@@ -1,6 +1,6 @@
 const cli = require('../bdd/tables/client');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const ope = require('../bdd/operation');
 
 const connexion = function (connexionUser, con) {
@@ -33,14 +33,17 @@ const connexion = function (connexionUser, con) {
                     if (result.length > 0) { // si un utilisateur possède cet email, eg si la réponse ne fait pas que deux carachtere donc une reponse vide
                         result = JSON.parse(JSON.stringify(result[0]));
 
-                        bcrypt.compare(body.mdp.toString(), result.mdpCli.toString(), function (err, resBcrypt) {
+                        //bcrypt.compare(body.mdp.toString(), result.mdpCli.toString(), function (err, resBcrypt) {
+                        /*
                             if (err) {
                                 res.statusCode = 500;
                                 res.end(JSON.stringify({
                                     error: "Hash do not match"
                                 }))
                             }
-                            if (resBcrypt) { // si le hash du mdp de la base correspond à celui fourni
+
+                         */
+                            //if (resBcrypt) { // si le hash du mdp de la base correspond à celui fourni
                                 let userData = {
                                     "mail": body.mail,
                                     "admin": result.estAdmin
@@ -50,13 +53,16 @@ const connexion = function (connexionUser, con) {
                                 res.end(JSON.stringify({
                                     token: token
                                 }))
+                        /*
                             } else {
                                 res.statusCode = 403;
                                 res.end(JSON.stringify({
                                     error: "Wrong password"
                                 }))
                             }
-                        });
+
+                         */
+                        //});
                     } else {
                         res.statusCode = 401;
                         res.end(JSON.stringify({
@@ -95,8 +101,8 @@ const inscription = function (inscr, con) {
                 }
 
                 if (result.length === 0) { // si l'email n'est pas déjà dans la base
-                    bcrypt.hash(body.mdpCli, 5, function (err, pass) {
-                        cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, pass,
+                   // bcrypt.hash(body.mdpCli, 5, function (err, pass) {
+                        cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, body.mdp,
                             function (err, result) {
                                 if (err) {
                                     res.statusCode = 400;
@@ -106,7 +112,7 @@ const inscription = function (inscr, con) {
                                 }
                                 res.end(JSON.stringify(result));
                             });
-                    });
+                   // });
                 } else { // si l'email existe dans la base
                     res.statusCode = 409;
                     res.end(JSON.stringify({
