@@ -20,7 +20,7 @@ const ope = require('./bdd/operation');
 
 ope.genRandStr();
 
-let server = http.createServer(function onRequest(req, res) {
+let serverBack = http.createServer(function onRequest(req, res) {
 
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow
@@ -88,9 +88,24 @@ router.use(function (req, res, next) {
 });
 
 
-const hostname = 'localhost';
+// const hostname = 'localhost';
 const port = 8085;
 
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+serverBack.listen(port, () => {
+    console.log(`Server running on :${port}/`);
+});
+
+let routerFront = new Router();
+
+let serverFront = http.createServer(function onRequest(req, res) {
+    routerFront(req, res, finalhandler(req, res))
+});
+
+routerFront.route("*", function (req, res) {
+    res._sendLocalDataFile('./dist/index.html')
+});
+
+const portFront = 3000;
+serverFront.listen(portFront, () => {
+    console.log(`ServerFront running at :${portFront}/`)
 });
