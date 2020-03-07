@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from './service/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
-import {connexion, location} from "../../http/urlReseaux";
-
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +25,6 @@ export class AuthComponent implements OnInit {
       mail: ['', Validators.required],
       pass: ['', Validators.required]
     });
-    console.log(location + connexion)
   }
 
   get f() { return this.loginForm.controls; }
@@ -44,7 +41,7 @@ export class AuthComponent implements OnInit {
     this.authService.login(this.f.mail.value, this.f.pass.value)
       .pipe(first())
       .subscribe(
-        data => {},
+          () => {},
         error => {
           this.error = error;
           this.loading = false;
