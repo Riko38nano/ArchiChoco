@@ -1,107 +1,86 @@
-<main class="login-form">
+<main class="content" role="main">
 
-  <div class="cotainer">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Inscription</div>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-          <div class="card-body">
+        <div>
+            <label for="mail">Email</label>
 
-            <form class="form-container" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div>
+                <input type="text" id="mail" placeholder="Entrez votre email" required
+                       formControlName="mail" class="form-control">
+            </div>
 
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right">Email</label>
+            <label for="mdp1">Mot de passe</label>
 
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Entrez votre email" required
-                         formControlName="mail" class="form-control">
-                </div>
+            <div>
+                <input type="password" id="mdp1" placeholder="Entrez votre mot de passe" required
+                       formControlName="mdp1" class="form-control"
+                       minlength="5">
+            </div>
 
-                <label class="col-md-4 col-form-label text-md-right">Mot de passe</label>
+            <div>
+                <label for="mdp2">Confirmation</label>
 
-                <div class="col-md-6">
-                  <input type="password" id="mdp1" placeholder="Entrez votre mot de passe" required
-                         formControlName="mdp1" class="form-control"
-                         minlength="5">
-                </div>
-
-                <div class="form-group row">
-                  <label class="col-md-4 col-form-label text-md-right">Confirmation</label>
-
-                  <div class="col-md-6">
+                <div>
                     <input type="password" id="mdp2" placeholder="Confirmez votre mot de passe" required
                            formControlName="mdp2" class="form-control"
                            minlength="5">
-                  </div>
-
                 </div>
+            </div>
 
-                <div class="form-group row">
-                  <label class="col-md-4 col-form-label text-md-right">Nom</label>
+            <div>
+                <label for="nom">Nom</label>
 
-                  <div class="col-md-6">
-
-                    <input type="text" placeholder="Nom" required class="form-control" formControlName="nom">
-                  </div>
-
+                <div>
+                    <input type="text" id="nom" placeholder="Nom" required class="form-control" formControlName="nom">
                 </div>
+            </div>
 
-                <div class="form-group row">
-                  <label class="col-md-4 col-form-label text-md-right">Prénom</label>
+            <div>
+                <label for="pnom">Prénom</label>
 
-                  <div class="col-md-6">
-
-                    <input type="text" placeholder="Prénom" class="form-control" required formControlName="pnom">
-                  </div>
-
+                <div>
+                    <input type="text" id="pnom" placeholder="Prénom" class="form-control" required formControlName="pnom">
                 </div>
+            </div>
 
-                <div class="form-group row">
-                  <label class="col-md-4 col-form-label text-md-right">Adresse</label>
+            <div>
+                <label for="address">Adresse</label>
 
-                  <div class="col-md-6">
-                    <input type="text" placeholder="Adresse" class="form-control" required formControlName="rue">
-                  </div>
-
+                <div class="col-md-6">
+                    <input type="text" id="address" placeholder="Adresse" class="form-control" required formControlName="rue">
                 </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right">Code postal</label>
-
-                <div class="col-md-6"><input type="text" placeholder="Code postal" class="form-control" required
-                                             formControlName="cp">
-
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label class="col-md-4 col-form-label text-md-right">Ville</label>
-
-                <div class="col-md-6"><input type="text" placeholder="Ville" class="form-control" required
-                                             formControlName="ville">
-
-                </div>
-
-              </div>
-
-              <div class="col-md-6 offset-md-4">
-                <button type="submit" value="S'inscrire" class="btn btn-dark" [disabled]="false">
-                  S'inscrire
-                </button>
-              </div>
-
-              <div ngClass="alert alert-danger" *ngIf="profileForm.invalid">
-                <div *ngIf="profileForm.errors?.mdpDoNotMatch && (profileForm.touched || profileForm.dirty)">
-                  Les mots de passes ne correspondent pas !
-                </div>
-              </div>
-
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+
+        <div>
+            <label for="cp">Code postal</label>
+
+            <div class="col-md-6"><input id="cp" type="text" placeholder="Code postal" class="form-control" required
+                                         formControlName="cp">
+            </div>
+        </div>
+
+        <div>
+            <label for="ville">Ville</label>
+
+            <div>
+              <input id="ville" type="text" placeholder="Ville" class="form-control" required
+                                         formControlName="ville">
+
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" value="S'inscrire" class="btn btn-dark" [disabled]="false">
+                S'inscrire
+            </button>
+        </div>
+
+        <div ngClass="alert alert-danger" *ngIf="profileForm.invalid">
+            <div *ngIf="profileForm.errors?.mdpDoNotMatch && (profileForm.touched || profileForm.dirty)">
+                Les mots de passes ne correspondent pas !
+            </div>
+        </div>
+    </form>
 </main>
