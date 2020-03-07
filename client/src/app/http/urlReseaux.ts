@@ -1,4 +1,4 @@
-export const location = 'http://localhost:8085';
+export const location = 'https://archichoco.herokuapp.com/';
 
 export const article = '/api/article';
 
