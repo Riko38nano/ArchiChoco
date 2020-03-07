@@ -40,62 +40,62 @@ let serverBack = http.createServer(function onRequest(req, res) {
     router(req, res, finalhandler(req, res))
 });
 
-const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
+const file = new(nodeStatic.Server)('./client/dist/chocoAngular/*');
 
 const con = moduleCo.connectWith('admin', 'toto');
-
-router.use(function (req, res, next) {
-    const connexionUser = router.route('/connexion');
-    userRoute.connexion(connexionUser, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const inscr = router.route('/inscription');
-    userRoute.inscription(inscr, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const article = router.route('/article');
-    artRoute.ArticlesRoute(article, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const articleBoite = router.route('/boite');
-    boiteRoute.boiteRoute(articleBoite, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const artId = router.route('/article/:id');
-    artIdRoute.artIdRoute(artId, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const commande = router.route("/commandes");
-    cmdRoute.commandeRoute(router, commande, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const cmdId = router.route('/commandes/:id');
-    cmdIdRoute.cmdIdRoute(cmdId, con);
-    next()
-});
-
-router.use(function (req, res, next) {
-    const comptabilite = router.route("/comptabilite");
-    compta.comptaRoute(comptabilite, con);
-    next()
-});
 
 router.route('/')
     .get(function (req, res) {
         file.serve(req, res);
     });
+
+router.use(function (req, res, next) {
+    const connexionUser = router.route('/api/connexion');
+    userRoute.connexion(connexionUser, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const inscr = router.route('/api/inscription');
+    userRoute.inscription(inscr, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const article = router.route('/api/article');
+    artRoute.ArticlesRoute(article, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const articleBoite = router.route('/api/boite');
+    boiteRoute.boiteRoute(articleBoite, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const artId = router.route('/api/article/:id');
+    artIdRoute.artIdRoute(artId, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const commande = router.route("/api/commandes");
+    cmdRoute.commandeRoute(router, commande, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const cmdId = router.route('/api/commandes/:id');
+    cmdIdRoute.cmdIdRoute(cmdId, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    const comptabilite = router.route("/api/comptabilite");
+    compta.comptaRoute(comptabilite, con);
+    next()
+});
 
 // const hostname = 'localhost';
 const port = process.env.PORT || 8085;
