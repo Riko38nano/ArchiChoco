@@ -44,7 +44,7 @@ const file = new(nodeStatic.Server)('./dist/');
 
 const con = moduleCo.connectWith('admin', 'toto');
 
-router.route('/*')
+router.route('/')
     .get(function (req, res) {
         file.serve(req, res);
     });
