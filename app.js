@@ -40,7 +40,7 @@ let serverBack = http.createServer(function onRequest(req, res) {
     router(req, res, finalhandler(req, res))
 });
 
-const file = new(nodeStatic.Server)('./dist/');
+const file = new(nodeStatic.Server)('./client/dist/chocoAngular');
 
 const con = moduleCo.connectWith('admin', 'toto');
 
