@@ -1,9 +1,9 @@
 const http = require('http');
-const path = require('path');
-const express = require('express');
 
 const finalhandler = require('finalhandler');
 const Router = require('router');
+const nodeStatic = require('node-static');
+
 let router = new Router();
 
 const moduleCo = require('./bdd/connector');
@@ -36,61 +36,63 @@ let serverBack = http.createServer(function onRequest(req, res) {
         res.statusCode = 200;
         res.end();
     }
+
     router(req, res, finalhandler(req, res))
 });
 
+const file = new(nodeStatic.Server)('./dist/');
 
 const con = moduleCo.connectWith('admin', 'toto');
 
-router.route('/')
+router.route('/*')
     .get(function (req, res) {
-        res._sendLocalDataFile( path.resolve('dist', 'chocoAngular', 'index.html') );
+        file.serve(req, res);
     });
 
 router.use(function (req, res, next) {
-    const connexionUser = router.route('/connexion');
+    const connexionUser = router.route('/api/connexion');
     userRoute.connexion(connexionUser, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const inscr = router.route('/inscription');
+    const inscr = router.route('/api/inscription');
     userRoute.inscription(inscr, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const article = router.route('/article');
+    const article = router.route('/api/article');
     artRoute.ArticlesRoute(article, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const articleBoite = router.route('/boite');
+    const articleBoite = router.route('/api/boite');
     boiteRoute.boiteRoute(articleBoite, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const artId = router.route('/article/:id');
+    const artId = router.route('/api/article/:id');
     artIdRoute.artIdRoute(artId, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const commande = router.route("/commandes");
+    const commande = router.route("/api/commandes");
     cmdRoute.commandeRoute(router, commande, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const cmdId = router.route('/commandes/:id');
+    const cmdId = router.route('/api/commandes/:id');
     cmdIdRoute.cmdIdRoute(cmdId, con);
     next()
 });
 
 router.use(function (req, res, next) {
-    const comptabilite = router.route("/comptabilite");
+    const comptabilite = router.route("/api/comptabilite");
     compta.comptaRoute(comptabilite, con);
     next()
 });
@@ -101,17 +103,3 @@ const port = process.env.PORT || 8085;
 serverBack.listen(port, () => {
     console.log(`Server running on :${port}/`);
 });
-
-const app = express();
-
-app.use(express.static(path.join(__dirname, 'dist')));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/dist/index.html'));
-});
-
-const portFront = process.env.PORT || 3000;
-app.set('port', portFront);
-
-const serverFront = http.createServer(app);
-serverFront.listen(portFront, () => console.log(`ServerFront running on :${portFront}/`));
