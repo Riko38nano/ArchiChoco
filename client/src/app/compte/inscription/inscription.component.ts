@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {mdpMatchValidator} from './mdpMatchValidator';
 import {InscriptionService} from './inscription.service';
 import {Compte} from '../Compte';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-inscription',
@@ -10,8 +11,6 @@ import {Compte} from '../Compte';
   styleUrls: ['./inscription.component.scss']
 })
 export class InscriptionComponent implements OnInit {
-
-  compte: Compte;
 
   profileForm = new FormGroup({
     mail: new FormControl(''),
@@ -29,7 +28,10 @@ export class InscriptionComponent implements OnInit {
     return this.profileForm.controls;
   }
 
-  constructor(private inscriptionService: InscriptionService) {
+  constructor(
+      private inscriptionService: InscriptionService,
+      private router: Router
+      ) {
   }
 
   ngOnInit(): void {
@@ -50,7 +52,8 @@ export class InscriptionComponent implements OnInit {
   addClient(mailCli: string, mdpCli: string, NomCli: string, PnomCli: string, RueCli: string, CPCli: number, VilleCli: string) {
     this.inscriptionService.addClient({mailCli, NomCli, PnomCli, RueCli, CPCli, VilleCli, mdpCli})
       .subscribe(client => {
-        // TODO Ajouter un handleError et afficher
+        this.router.navigate(['Connexion']).then();
+        this.profileForm.reset()
       });
   }
 }

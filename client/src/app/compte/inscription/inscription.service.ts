@@ -17,9 +17,6 @@ export class InscriptionService {
   ) {}
 
   addClient(client: Compte) {
-    return this.http.post<Compte>(this.clientUrl, client, httpOptions)
-      .pipe(map(user => {
-
-      }));
+    return this.http.post<Compte>(this.clientUrl, client, httpOptions).pipe()
   }
 }

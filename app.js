@@ -44,8 +44,6 @@ const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
 const con = moduleCo.connect();
 
-//const con = moduleCo.connectWith('admin', 'toto');
-
 router.use(function (req, res, next) {
     const connexionUser = router.route('/api/connexion');
     userRoute.connexion(connexionUser, con);
