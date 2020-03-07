@@ -30,6 +30,8 @@ const connexion = function (connexionUser, con) {
                         res.end(err.toString())
                     }
 
+                    console.log(result);
+
                     if (result.length > 0) { // si un utilisateur possède cet email, eg si la réponse ne fait pas que deux carachtere donc une reponse vide
                         result = JSON.parse(JSON.stringify(result[0]));
 
