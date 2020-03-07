@@ -1,4 +1,5 @@
 const keygen = require("keygenerator");
+const Crypto = require('cryptojs').Crypto;
 
 const jwt = require('jsonwebtoken');
 
@@ -54,7 +55,6 @@ function decodeOk(token, str) {
     return true
 }
 
-let randStr = '';
 const decodeToken = function (token) {
     if (decodeOk(token, randStr)) {
         return jwt.verify(token, randStr);
@@ -74,6 +74,7 @@ const isJSON = function (str) {
 };
 exports.isJSON = isJSON;
 
+let randStr = '';
 const genRandStr = function () {
     randStr = keygen.session_id();
 };
@@ -83,3 +84,23 @@ const getRandStr = function () {
     return randStr
 };
 exports.getRandStr = getRandStr;
+
+const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
+const crypt = function (mdp){
+    const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
+    const ub = Crypto.charenc.UTF8.stringToBytes(mdp);
+    const eb = Crypto.DES.encrypt(ub, key, {asBytes: true, mode: mode});
+
+    return Crypto.util.bytesToHex(eb)
+};
+exports.crypt = crypt;
+
+const decrypt = function(hash) {
+    const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
+
+    const eb = Crypto.util.hexToBytes(hash);
+    const ub = Crypto.DES.decrypt(eb, key, {asBytes: true, mode: mode});
+
+    return Crypto.charenc.UTF8.bytesToString(ub)
+};
+exports.decrypt = decrypt;
