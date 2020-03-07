@@ -1,13 +1,13 @@
 export const location = 'http://localhost:8085';
 
-export const article = '/api/article';
+export const article = '/article';
 
-export const commande = '/api/commandes';
+export const commande = '/commandes';
 
-export const connexion = '/api/connexion';
+export const connexion = '/connexion';
 
-export const inscription = '/api/inscription';
+export const inscription = '/inscription';
 
-export const compta = '/api/comptabilite';
+export const compta = '/comptabilite';
 
-export const boite = '/api/boite';
+export const boite = '/boite';
