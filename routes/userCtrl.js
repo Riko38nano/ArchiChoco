@@ -1,6 +1,5 @@
 const cli = require('../bdd/tables/client');
 const jwt = require('jsonwebtoken');
-//const bcrypt = require('bcrypt');
 const ope = require('../bdd/operation');
 
 const connexion = function (connexionUser, con) {
@@ -21,19 +20,18 @@ const connexion = function (connexionUser, con) {
             }
 
             if (body.mail) {
-
                 // On regarde si le client existe dans la base
 
-                cli.getClientByMail(con, body.mail.toString(), function (err, result) {
+                cli.getClientByMail(con, body.mail, function (err, result) {
                     if (err) {
                         res.statusCode = 500;
                         res.end(err.toString())
                     }
 
-                    if (result.length > 0) { // si un utilisateur possède cet email
+                    if (result && result.length > 0) { // si un utilisateur possède cet email
                         result = JSON.parse(JSON.stringify(result[0]));
 
-                        if (result.mdpCli === ope.decrypto(body.mdpCli)) {
+                        if (result.mdpCli === ope.crypt(body.mdpCli)) {
                             let userData = {
                                 "mail": body.mail,
                                 "admin": result.EstAdmin
