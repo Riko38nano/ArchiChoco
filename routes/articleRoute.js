@@ -10,76 +10,88 @@ const ArticlesRoute = function (article, con) {
         .get(function (req, res) {
             // Get tous les articles avec les details des SousTables
 
-            art.getArticles(con, function (err, result) {
-                if (err) {
-                    res.statusCode = 500;
-                    res.end(err.toString())
-                }
+            const token = JSON.parse(JSON.stringify(req.headers)).authorization;
 
-                result = JSON.parse(JSON.stringify(result));
+            const decoded = operation.decodeToken(token);
 
-                let tabArticleExtended = [];
+            if (decoded === null) {
+                res.statusCode = 403;
+                res.end(JSON.stringify({
+                    error: "Your token is not availaible"
+                }))
+            } else {
 
-                if (result.length > 0) {
+                art.getArticles(con, function (err, result) {
+                    if (err) {
+                        res.statusCode = 500;
+                        res.end(err.toString())
+                    }
 
-                    for (let i = 0; i < result.length; i++) { // pour chaque article que l'on trouve dans la table principal
-                        // on veut pouvoir recuperer les attributs qu'il a dans la SousTable qui lui correspond
+                    result = JSON.parse(JSON.stringify(result));
 
-                        const type = result[i].Type;
-                        const id = result[i].NumArt;
-                        switch (type) {
-                            case "boites":
-                                boite.getBoite(con, id, function (error, result2) {
-                                    if (err) {
-                                        res.statusCode = 500;
-                                        res.end(err.toString())
+                    let tabArticleExtended = [];
+
+                    if (result.length > 0) {
+
+                        for (let i = 0; i < result.length; i++) { // pour chaque article que l'on trouve dans la table principal
+                            // on veut pouvoir recuperer les attributs qu'il a dans la SousTable qui lui correspond
+
+                            const type = result[i].Type;
+                            const id = result[i].NumArt;
+                            switch (type) {
+                                case "boites":
+                                    boite.getBoite(con, id, function (error, result2) {
+                                        if (err) {
+                                            res.statusCode = 500;
+                                            res.end(err.toString())
+                                        }
+                                        cbGetTable(result2)
+                                    });
+                                    break;
+                                case "tablettes":
+                                    tab.getTablette(con, id, function (error, result2) {
+                                        if (err) {
+                                            res.statusCode = 500;
+                                            res.end(err.toString())
+                                        }
+                                        cbGetTable(result2)
+                                    });
+                                    break;
+                                case "autres":
+                                    autre.getAutre(con, id, function (error, result2) {
+                                        if (err) {
+                                            res.statusCode = 500;
+                                            res.end(err.toString())
+                                        }
+                                        cbGetTable(result2);
+                                    });
+                                    break;
+                                default:
+                                    res.statusCode = 400;
+                                    res.end(JSON.stringify({
+                                        error: "Article de type inconnu"
+                                    }));
+
+                                function cbGetTable(result2) {
+                                    result2 = JSON.parse(JSON.stringify(result2[0]));
+
+                                    tabArticleExtended[i] = operation.createArticleExtended(result[i], result2);
+
+                                    if (i === result.length - 1) {
+
+                                        res.statusCodec = 200;
+                                        res.end(JSON.stringify(tabArticleExtended));
+
                                     }
-                                    cbGetTable(result2)
-                                });
-                                break;
-                            case "tablettes":
-                                tab.getTablette(con, id, function (error, result2) {
-                                    if (err) {
-                                        res.statusCode = 500;
-                                        res.end(err.toString())
-                                    }
-                                    cbGetTable(result2)
-                                });
-                                break;
-                            case "autres":
-                                autre.getAutre(con, id, function (error, result2) {
-                                    if (err) {
-                                        res.statusCode = 500;
-                                        res.end(err.toString())
-                                    }
-                                    cbGetTable(result2);
-                                });
-                                break;
-                            default:
-                                res.statusCode = 400;
-                                res.end(JSON.stringify({
-                                    error: "Article de type inconnu"
-                                }));
-
-                            function cbGetTable(result2) {
-                                result2 = JSON.parse(JSON.stringify(result2[0]));
-
-                                tabArticleExtended[i] = operation.createArticleExtended(result[i], result2);
-
-                                if (i === result.length - 1) {
-
-                                    res.statusCodec = 200;
-                                    res.end(JSON.stringify(tabArticleExtended));
-
                                 }
                             }
                         }
+                    } else {
+                        res.statusCode = 200;
+                        res.end()
                     }
-                } else {
-                    res.statusCode = 200;
-                    res.end()
-                }
-            })
+                })
+            }
         })
         .post(function (req, res) {
 

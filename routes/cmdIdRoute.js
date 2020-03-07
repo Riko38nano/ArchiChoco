@@ -20,7 +20,7 @@ const cmdIdRoute = function(commandeId, con){
             } else {
                 // Lorsqu'on supprime une commande on veut garder le bénéfice et sa date dans la table ArchiveCmd
 
-                const idCmd = req.url.split('/')[2];
+                const idCmd = req.url.split('/')[3];
 
                 // on doit récuperer le prix total de la commande, sa date et son id
                 archCmd.getPrixTotCmd(con, idCmd, function (err, result) {

@@ -42,7 +42,9 @@ let serverBack = http.createServer(function onRequest(req, res) {
 
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
-const con = moduleCo.connect();
+// const con = moduleCo.connect();
+
+const con = moduleCo.connectWith('admin', 'toto');
 
 router.use(function (req, res, next) {
     const connexionUser = router.route('/api/connexion');
@@ -91,7 +93,7 @@ router.use(function (req, res, next) {
     compta.comptaRoute(comptabilite, con);
     next()
 });
-
+/*
 router.use(function (req, res, next) {
     router.route('*')
         .get(function (req, res) {
@@ -99,7 +101,7 @@ router.use(function (req, res, next) {
         });
     next()
 });
-
+*/
 // const hostname = 'localhost';
 const port = process.env.PORT || 8085;
 

@@ -20,9 +20,8 @@ const ArticlesRoute = function (article, con) {
                         error: "Your token is not readable"
                     }))
                 } else {
-                    // Get tous les articles avec les details des SousTables
 
-                    const id = req.url.split('/')[2];
+                    const id = req.url.split('/')[3];
 
                     art.getArticle(con, id, function (err, result) {
                         if (err) {
@@ -123,7 +122,7 @@ const ArticlesRoute = function (article, con) {
                         if (decoded.admin === 1) {
                             // on décide de ne pas pouvoir changer le type d'un article et de preferer supprimer l'article en question
 
-                            const id = req.url.split('/')[2];
+                            const id = req.url.split('/')[3];
                             let count = 1; // variable pour compter le nombre de fois où l'on rentre dans le callBack de fin
                             let nbParam = 0; // variable qui compte le nombre de paramètre non null
 
@@ -175,7 +174,7 @@ const ArticlesRoute = function (article, con) {
                                     })
                                 }
 
-                                if (body.Prix && body.Prix.length > 0) {
+                                if (body.Prix) {
                                     nbParam += 1;
                                     art.updateArtPrix(con, id, body.Prix, function (error, result2) {
                                         if (error) {
@@ -230,7 +229,7 @@ const ArticlesRoute = function (article, con) {
 
                         // pour supprimer un article il faut d'abord le supprimer de la sous-table
 
-                        const id = req.url.split('/')[2];
+                        const id = req.url.split('/')[3];
 
                         // pour supprimer il faut qu'aucun client n'ait commandé cet article, si une commande est en cours on placera l'attribut affichage à 0 dans article
                         // ainsi on pourra afficher ou non coté FrontEnd en fonction de cet attribut
