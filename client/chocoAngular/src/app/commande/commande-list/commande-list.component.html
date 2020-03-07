@@ -1,0 +1,81 @@
+<main class="content" role="main">
+
+  <div *ngIf="ok" class="tag--success">{{ok}}</div>
+  <div *ngIf="info" class="tag--info">{{info}}</div>
+
+  <div *ngFor="let cmd of commandes">
+
+    <table class="table">
+      <caption>{{cmd.NomCli}} {{cmd.PnomCli}}</caption>
+      <caption *ngIf="cmd.Livraison == 1">{{cmd.RueCli}} {{cmd.CPCli}}, {{cmd.VilleCli}}</caption>
+      <thead>
+
+      <tr>
+        <th scope="col">
+          {{cmd.Consigne}} {{cmd.prixTot}} €
+          <div *ngIf="cmd.Livraison === 1" class="tag--primary">Demande à se faire livré</div>
+        </th>
+      </tr>
+
+      </thead>
+
+      <tbody *ngFor="let art of cmd.artList">
+
+          <tr *ngIf="art.Type == 'autres'">
+            <td>
+              - Prestation : {{art.description}}
+            </td>
+          </tr>
+
+          <tr *ngIf="art.Type == 'tablettes'">
+            <td>
+              - Tablette au chocolat {{art.typeChoco}}
+            </td>
+          </tr>
+
+          <tr *ngIf="art.Type == 'boites'">
+            <td>
+
+              - Boites de bonbons/ chocolats personnalisées :
+
+              <div>Boite de {{art.quantite}}g, contenant :</div>
+
+              <div *ngIf="art.noisette != 0">
+                {{art.noisette / 100 * art.quantite}}g de chocolat noisette
+              </div>
+
+              <div *ngIf="art.alcool != 0">
+                {{art.alcool / 100 * art.quantite}}g de bonbons à l'alcool
+              </div>
+
+              <div *ngIf="art.blanc != 0">
+                {{art.blanc / 100 * art.quantite}}g de chocolat blanc
+              </div>
+
+              <div *ngIf="art.noir != 0">
+                {{art.noir / 100 * art.quantite}}g de chocolat noir
+              </div>
+
+              <div *ngIf="art.au_lait != 0">
+                {{art.au_lait / 100 * art.quantite}}g de chocolat au lait
+              </div>
+
+              <div *ngIf="art.praline != 0">
+                {{art.praline / 100 * art.quantite}}g de chocolat praliné
+              </div>
+
+            </td>
+          </tr>
+
+      </tbody>
+
+    </table>
+
+    <label>
+      Commande prête
+      <input type="checkbox" value="Commande complété" (click)="delCmd(cmd.NumCmd)">
+    </label>
+
+  </div>
+
+</main>

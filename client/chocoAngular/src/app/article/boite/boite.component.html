@@ -1,0 +1,82 @@
+<script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
+<div>Choissisez vos parfums et ajouter les à votre boite</div>
+
+<div style="width:400px">
+  <canvas
+    baseChart
+    [chartType]="'doughnut'"
+    [data]="chartData"
+    [labels]="chartLabels"
+    [options]="chartOptions"
+    [legend]="true"
+    (chartClick)="updateChart()">
+  </canvas>
+</div>
+
+<!-- selecteurs de parfums -->
+<div class="grid-2 has-gutter">
+  <form [formGroup]="formBoite" (change)="updateChart(); is100Calcul()" (ngSubmit)="postBoite()">
+
+    <div class="tag--primary">
+      {{totalParfum}}
+    </div>
+
+    <div>
+      <label>
+        <select name="qte" formControlName="qte">
+          <option value="500">500g</option>
+          <option value="400">400g</option>
+          <option value="300">300g</option>
+          <option value="200">200g</option>
+          <option value="100">100g</option>
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <label for="noisette">Pourcentage de bonbons noisette</label>
+      <input type="range" id="noisette" formControlName="noisette" step="10" max="100"
+             min="0">{{this.getVal.noisette.value}}%
+    </div>
+
+    <div>
+      <label for="alcool">Pourcentage de bonbons à l'alcool</label>
+      <input type="range" id="alcool" formControlName="alcool" step="10" max="100" min="0">{{this.getVal.alcool.value}}%
+    </div>
+
+    <div>
+      <label for="blanc">Pourcentage de chocolats blanc</label>
+      <input type="range" id="blanc" formControlName="blanc" step="10" max="100" min="0">{{this.getVal.blanc.value}}%
+    </div>
+
+    <div>
+      <label for="noir">Pourcentage de chocolats noir</label>
+      <input type="range" id="noir" formControlName="noir" step="10" max="100" min="0">{{this.getVal.noir.value}}%
+    </div>
+
+    <div>
+      <label for="lait">Pourcentage de chocolat au lait</label>
+      <input type="range" id="lait" formControlName="auLait" step="10" max="100" min="0">{{this.getVal.auLait.value}}%
+    </div>
+
+    <div>
+      <label for="praline">Pourcentage de chocolat praline</label>
+      <input type="range" id="praline" formControlName="praline" step="10" max="100"
+             min="0">{{this.getVal.praline.value}}%
+    </div>
+
+    <div *ngIf="totalParfum > 100" class="tag--warning">
+      Vous en avez trop pris ! Retirez en un peu pour faire 100 !
+    </div>
+
+    <div *ngIf="totalParfum < 100" class="tag--info">
+      Vous en avez pas assez pris ! Ajoutez en un peu pour faire 100 !
+    </div>
+
+    <div>
+      <input type="submit" value="Commander cette boite" *ngIf="totalParfum == 100">
+    </div>
+
+  </form>
+</div>

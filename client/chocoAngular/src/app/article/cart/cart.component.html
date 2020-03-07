@@ -1,0 +1,106 @@
+<main>
+
+  <div *ngIf="error" class="tag--danger">{{error}}</div>
+  <div *ngIf="info" class="tag--info">{{info}}</div>
+
+  <table class="table">
+    <caption>Votre panier, prix total : {{getTotal()}}</caption>
+
+    <thead>
+    <tr>
+      <th scope="col">Article commandés</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody *ngFor="let article of items">
+
+
+    <tr *ngIf="article.Type == 'tablettes'">
+
+      <td>
+        Chocolat {{article.typeChoco}} à {{article.Prix}} €
+      </td>
+
+      <td>
+        <button class="btn-success" (click)="delFromCart(article)">Supprimer du panier</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+
+    <tbody *ngFor="let article of items">
+
+    <tr *ngIf="article.Type == 'boites'">
+
+      <td>
+
+        Boite de {{article.quantite}}g
+        <div>Contenant :</div>
+
+        <div *ngIf="article.noisette != 0">{{article.noisette / 100 * article.quantite}}g de chocolat
+          noisette
+        </div>
+        <div *ngIf="article.alcool != 0">{{article.alcool / 100 * article.quantite}}g de bonbons à l'alcool
+        </div>
+        <div *ngIf="article.blanc != 0">{{article.blanc / 100 * article.quantite}}g de chocolat blanc</div>
+        <div *ngIf="article.noir != 0">{{article.noir / 100 * article.quantite}}g de chocolat noir</div>
+        <div *ngIf="article.au_lait != 0">{{article.au_lait / 100 * article.quantite}}g de chocolat au lait
+        </div>
+        <div *ngIf="article.praline != 0">{{article.praline / 100 * article.quantite}}g de chocolat praliné
+        </div>
+
+        <label class="col-form-label">{{article.Prix}} €</label>
+
+      </td>
+
+
+      <td>
+        <button class="btn-success" (click)="delFromCart(article)">Supprimer du panier</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+
+    <tbody *ngFor="let article of items">
+
+
+    <tr *ngIf="article.Type == 'autres'" id="autre{{article.NumArt}}">
+
+      <td>
+        {{article.description}} à {{article.Prix}} €
+      </td>
+
+      <td>
+        <button class="btn-success" (click)="delFromCart(article)">Supprimer du panier</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+  <form [formGroup]="formCmd" (ngSubmit)="passerCommande()">
+
+    <div class="row">
+      <label for="consigne">Entrez ici une consigne si besoin</label>
+      <input type="text" id="consigne" formControlName="consigne">
+    </div>
+
+    <div class="row">
+      <label>
+        Demander la livraison ?
+        <input type="checkbox" formControlName="livraison">
+      </label>
+    </div>
+
+    <div class="row">
+      <button class="btn--success" type="submit">Passer commande</button>
+    </div>
+
+  </form>
+
+</main>

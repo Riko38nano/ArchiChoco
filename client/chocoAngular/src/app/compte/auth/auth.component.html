@@ -1,0 +1,35 @@
+<!-- formulaire de connexion -->
+<main>
+
+  <div class="center">
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="form-group row">
+
+        <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+        <div class="col-md-6">
+          <input type="text" id="email_address" class="form-control" name="email-address" formControlName="mail"
+                 required autofocus>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+        <div class="col-md-6">
+          <input type="password" id="password" class="form-control" name="password" formControlName="pass"
+                 required>
+        </div>
+      </div>
+
+      <div class="col-md-6 offset-md-4">
+        <button type="submit" [disabled]="loading" class="btn-dark">Se
+          connecter
+        </button>
+      </div>
+
+      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+    </form>
+
+  </div>
+</main>

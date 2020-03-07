@@ -1,0 +1,314 @@
+<main class="content" role="main">
+
+  <div *ngIf="isAdmin()" id="divAddArt">
+    <input type="checkbox" class="switch" id="buttonAddArt" (click)="popUpAddArtChamp()"/>
+    <label for="buttonAddArt" class="label">Ajouter article</label>
+  </div>
+
+  <div *ngIf="popped">
+    <form (ngSubmit)="submitAddArticle()" [formGroup]="addArtForm">
+
+      <label>
+        <select formControlName="type">
+          <option value="tablettes">Tablette</option>
+          <option value="autres">Autres</option>
+        </select>
+      </label>
+
+      <label>
+        <input type="text" placeholder="Description/ type de chocolat" formControlName="chaine" required>
+      </label>
+
+      <label>
+        <input type="text" placeholder="Prix" formControlName="prix" required>
+      </label>
+
+      <button type="submit">Ajouter article</button>
+
+    </form>
+  </div>
+
+  <div class="tag--danger" *ngIf="error">{{error}}</div>
+  <div class="tag--info" *ngIf="info">{{info}}</div>
+  <div class="tag--success" *ngIf="ok">{{ok}}</div>
+
+  <table class="table">
+    <caption>Disponible en livraison/ ou en magasin</caption>
+
+    <thead>
+    <tr>
+      <th scope="col">Autres</th>
+      <th style="width: 25%"></th>
+      <th></th>
+      <th style="width: 25%"></th>
+      <th style="width: 18%"></th>
+    </tr>
+    </thead>
+
+    <tbody *ngFor="let article of articles, index as index">
+
+    <tr *ngIf="article.Type == 'autres'" id="autre{{article.NumArt}}">
+
+      <td>
+        <div>
+          <input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="updateAff(article)" title="Affichage"
+                 [checked]="article.Affichage">
+          <div *ngIf="isAdmin()">Affichage</div>
+        </div>
+      </td>
+
+      <td *ngIf="isAdmin() && article.Affichage == 0">
+        {{article.description}} à {{article.Prix}} €
+        <div class="tag--warning"> : ne s'affiche pas</div>
+
+      </td>
+
+      <td *ngIf="article.Affichage == 1">
+        {{article.description}} à {{article.Prix}} €
+      </td>
+
+      <td>
+        <input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="popUpFormModif(index)"
+               id="modifautres{{article.NumArt}}" title="Modifier">
+      </td>
+
+      <td *ngIf="poppedModif[index]">
+
+        <form (ngSubmit)="submitModArticle(article.NumArt, article.Type)" [formGroup]="modArtForm">
+
+          <label>
+            <input type="text" placeholder="Description : " formControlName="chaine">
+          </label>
+
+          <label>
+            <input type="text" placeholder="Prix : " formControlName="prix">
+          </label>
+
+          <button type="submit">Modifier article</button>
+
+        </form>
+
+      </td>
+
+      <td *ngIf="!poppedModif[index]"></td>
+
+      <td *ngIf="article.Affichage == 1">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+        <button class="btn--success" *ngIf="!isAdmin()" (click)="addToCart(article)">Ajouter au panier</button>
+      </td>
+
+      <td *ngIf="article.Affichage == 0">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+
+  </table>
+
+  <table class="table">
+    <caption>Disponible en livraison/ ou en magasin</caption>
+
+    <thead>
+    <tr>
+      <th scope="col">Tablette</th>
+      <th style="width: 25%"></th>
+      <th></th>
+      <th style="width: 25%"></th>
+      <th style="width: 18%"></th>
+    </tr>
+    </thead>
+
+    <tbody *ngFor="let article of articles, index as index">
+
+    <tr *ngIf="article.Type == 'tablettes'" id="tab{{article.NumArt}}">
+
+      <td>
+        <div>
+          <input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="updateAff(article)" title="Affichage"
+                 [checked]="article.Affichage">
+          <div *ngIf="isAdmin()">Affichage</div>
+        </div>
+      </td>
+
+      <td *ngIf="isAdmin() && article.Affichage == 0">
+        Chocolat {{article.typeChoco}} à {{article.Prix}} €
+        <div class="tag--warning"> : ne s'affiche pas</div>
+
+      </td>
+
+      <td *ngIf="article.Affichage == 1">
+        Chocolat {{article.typeChoco}} à {{article.Prix}} €
+      </td>
+
+      <td>
+        <input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="popUpFormModif(index)"
+               id="modiftablettes{{article.NumArt}}" title="Modifier">
+      </td>
+
+      <td *ngIf="poppedModif[index]">
+
+        <form (ngSubmit)="submitModArticle(article.NumArt, article.Type)" [formGroup]="modArtForm">
+
+          <label>
+            <input type="text" placeholder="Description : " formControlName="chaine">
+          </label>
+
+          <label>
+            <input type="text" placeholder="Prix : " formControlName="prix">
+          </label>
+
+          <button type="submit">Modifier article</button>
+
+        </form>
+
+      </td>
+
+      <td *ngIf="!poppedModif[index]"></td>
+
+      <td *ngIf="article.Affichage == 1">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+        <button class="btn--success" *ngIf="!isAdmin()" (click)="addToCart(article)">Ajouter au panier</button>
+      </td>
+
+      <td *ngIf="article.Affichage == 0">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+  <table class="table">
+    <caption>Disponible en livraison/ ou en magasin</caption>
+
+    <thead>
+    <tr>
+      <th scope="col">
+        Boites de bonbons/ chocolats
+      </th>
+      <th style="width: 25%"></th>
+      <th></th>
+      <th style="width: 25%"></th>
+      <th style="width: 18%"></th>
+    </tr>
+    </thead>
+
+    <tbody *ngFor="let article of articles, index as index">
+
+    <tr *ngIf="article.Type == 'boites'">
+
+      <td>
+        <div>
+          <input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="updateAff(article)" title="Affichage"
+                 [checked]="article.Affichage">
+          <div *ngIf="isAdmin()">Affichage</div>
+        </div>
+      </td>
+
+      <td *ngIf="isAdmin() && article.Affichage == 0">
+
+        Boite de {{article.quantite}}g
+        <div class="tag--warning"> : ne s'affiche pas</div>
+        <div>Contenant :</div>
+
+        <div *ngIf="article.noisette != 0">
+          {{article.noisette / 100 * article.quantite}}g de chocolat noisette
+        </div>
+
+        <div *ngIf="article.alcool != 0">
+          {{article.alcool / 100 * article.quantite}}g de bonbons à l'alcool
+        </div>
+
+        <div *ngIf="article.blanc != 0">
+          {{article.blanc / 100 * article.quantite}}g de chocolat blanc
+        </div>
+
+        <div *ngIf="article.noir != 0">
+          {{article.noir / 100 * article.quantite}}g de chocolat noir
+        </div>
+
+        <div *ngIf="article.au_lait != 0">
+          {{article.au_lait / 100 * article.quantite}}g de chocolat au lait
+        </div>
+
+        <div *ngIf="article.praline != 0">
+          {{article.praline / 100 * article.quantite}}g de chocolat praliné
+        </div>
+
+        <div class="col-form-label">{{article.Prix}} €</div>
+
+      </td>
+
+      <td *ngIf="article.Affichage === 1">
+
+        Boite de {{article.quantite}}g
+        <div>Contenant :</div>
+
+        <div *ngIf="article.noisette != 0">
+          {{article.noisette / 100 * article.quantite}}g de chocolat noisette
+        </div>
+
+        <div *ngIf="article.alcool != 0">
+          {{article.alcool / 100 * article.quantite}}g de bonbons à l'alcool
+        </div>
+
+        <div *ngIf="article.blanc != 0">
+          {{article.blanc / 100 * article.quantite}}g de chocolat blanc
+        </div>
+
+        <div *ngIf="article.noir != 0">
+          {{article.noir / 100 * article.quantite}}g de chocolat noir
+        </div>
+
+        <div *ngIf="article.au_lait != 0">
+          {{article.au_lait / 100 * article.quantite}}g de chocolat au lait
+        </div>
+
+        <div *ngIf="article.praline != 0">
+          {{article.praline / 100 * article.quantite}}g de chocolat praliné
+        </div>
+
+        <label class="col-form-label">{{article.Prix}} €</label>
+
+      </td>
+
+      <td><input type="checkbox" class="switch" *ngIf="isAdmin()" (click)="popUpFormModif(index)"
+                 id="modifboites{{article.NumArt}}" title="Modifier"></td>
+
+      <td *ngIf="poppedModif[index]">
+
+        <form (ngSubmit)="submitModArticle(article.NumArt, article.Type)" [formGroup]="modArtForm">
+
+          <label>
+            <input type="text" placeholder="Prix : " formControlName="prix">
+          </label>
+
+          <button type="submit">Modifier article</button>
+
+        </form>
+
+      </td>
+
+      <td *ngIf="!poppedModif[index]"></td>
+
+      <td *ngIf="article.Affichage == 1">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+        <button class="btn--success" *ngIf="!isAdmin()" (click)="addToCart(article)">Ajouter au panier</button>
+      </td>
+
+      <td *ngIf="article.Affichage == 0">
+        <button class="btn btn-danger" *ngIf="isAdmin()" (click)="delArt(article.NumArt)">Supprimer</button>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+  <button (click)="popBoite()" class="btn--success">Création de boite de bonbons !</button>
+  <app-boite *ngIf="displayBoite"></app-boite>
+
+</main>
