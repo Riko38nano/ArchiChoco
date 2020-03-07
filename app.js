@@ -111,7 +111,7 @@ app.get('*', (req, res) => {
 });
 
 const portFront = process.env.PORT || 3000;
-app.set('port', port);
+app.set('port', portFront);
 
 const serverFront = http.createServer(app);
-serverFront.listen(portFront, () => console.log('running'));
+serverFront.listen(portFront, () => console.log(`ServerFront running on :${portFront}/`));
