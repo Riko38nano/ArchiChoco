@@ -96,7 +96,7 @@ router.use(function (req, res, next) {
 });
 
 // const hostname = 'localhost';
-const port = 8085;
+const port = process.env.PORT || 8085;
 
 serverBack.listen(port, () => {
     console.log(`Server running on :${port}/`);
@@ -106,7 +106,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/dist/chocoAngular/index.html'));
 });
 
