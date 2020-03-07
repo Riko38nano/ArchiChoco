@@ -28,7 +28,7 @@ let serverBack = http.createServer(function onRequest(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Request-Method', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Request-Method', 'GET, POST, OPTIONS, PUT, DELETE');
     // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', '*');
 
@@ -40,14 +40,9 @@ let serverBack = http.createServer(function onRequest(req, res) {
     router(req, res, finalhandler(req, res))
 });
 
-const file = new(nodeStatic.Server)('./client/dist/');
+const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
-const con = moduleCo.connectWith('admin', 'toto');
-
-router.route('/')
-    .get(function (req, res) {
-        file.serve(req, res);
-    });
+const con = moduleCo.connect();
 
 router.use(function (req, res, next) {
     const connexionUser = router.route('/api/connexion');
@@ -94,6 +89,14 @@ router.use(function (req, res, next) {
 router.use(function (req, res, next) {
     const comptabilite = router.route("/api/comptabilite");
     compta.comptaRoute(comptabilite, con);
+    next()
+});
+
+router.use(function (req, res, next) {
+    router.route('*')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
     next()
 });
 

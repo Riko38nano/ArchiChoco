@@ -1,14 +1,14 @@
 const getClientNomPnom = function (con, id, callback) {
-    const sql = 'SELECT nomCli, pnomCli ' +
-        'FROM clients ' +
+    const sql = 'SELECT NomCli, PnomCli ' +
+        'FROM Clients ' +
         "WHERE NumCli = ?";
     return con.query(sql, [id], callback)
 };
 exports.getClientNomPnom = getClientNomPnom;
 
 const getClientByMail = function (con, mail, callback) {
-    const sql = 'SELECT NumCli, mdpCli, estAdmin ' +
-        'FROM clients ' +
+    const sql = 'SELECT NumCli, mdpCli, EstAdmin ' +
+        'FROM Clients ' +
         "WHERE mailCli = ?";
     return con.query(sql, [mail], callback)
 };
@@ -23,8 +23,8 @@ const getIdCliByMail = function (con, mail, cb) {
 exports.getIdCliByMail = getIdCliByMail;
 
 const getNomAddress = function (con, id, callback) {
-    const sql = 'SELECT nomCli, pnomCli, rueCli, CPcli, villeCli ' +
-        'FROM clients ' +
+    const sql = 'SELECT NomCli, PnomCli, RueCli, CPCli, VilleCli ' +
+        'FROM Clients ' +
         "WHERE NumCli = ?";
     return con.query(sql, [id], callback)
 };

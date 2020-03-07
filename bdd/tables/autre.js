@@ -1,15 +1,15 @@
 const getAutre = function (con, id, callback) {
     const sql = 'SELECT * ' +
-        'FROM Autres ' +
+        'FROM autres ' +
         'WHERE NumArtAutre = ?';
     return con.query(sql, [id], callback)
 };
 exports.getAutre = getAutre;
 
 const updateAutre = function (con, id, descr, callback) {
-    const sql = 'UPDATE Autres ' +
+    const sql = 'UPDATE autres ' +
         'SET description = ? ' +
-        'WHERE numArtAutre = ?';
+        'WHERE NumArtAutre = ?';
     return con.query(sql, [descr, id], callback)
 };
 exports.updateAutre = updateAutre;
@@ -30,7 +30,7 @@ exports.insertAutreWId = insertAutreWId;
 
 const delAutre = function (con, id, callback) {
     const sql = 'DELETE FROM autres ' +
-        'WHERE numArtAutre = ?';
+        'WHERE NumArtAutre = ?';
     return con.query(sql, [id], callback)
 };
 exports.delAutre = delAutre;

@@ -97,7 +97,6 @@ const ArticlesRoute = function (article, con) {
             .put(function (req, res) {
 
                 const token = JSON.parse(JSON.stringify(req.headers)).authorization;
-
                 const decoded = operation.decodeToken(token);
                 if (decoded === null) {
                     res.statusCode = 401;
@@ -138,11 +137,13 @@ const ArticlesRoute = function (article, con) {
 
                                 if (body.chaine && body.chaine.length > 0) {
                                     nbParam += 1;
-                                    art.getArticle(con, id, function (err, result) {
+                                    art.getType(con, id, function (err, result) {
                                         if (err) {
                                             res.statusCode = 400;
                                             res.end(err.toString())
                                         }
+
+                                        console.log(result);
 
                                         result = JSON.parse(JSON.stringify(result[0]));
 

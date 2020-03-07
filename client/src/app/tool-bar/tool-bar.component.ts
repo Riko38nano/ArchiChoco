@@ -11,7 +11,6 @@ export class ToolBarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +25,6 @@ export class ToolBarComponent implements OnInit {
   }
 
   logout() {
-    location.reload();
     this.authService.logout();
   }
 }

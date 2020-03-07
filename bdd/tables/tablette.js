@@ -1,7 +1,7 @@
 const getTablette = function (con, id, cb) {
     const sql = 'SELECT * ' +
         'FROM tablettes ' +
-        'WHERE numArtTab = ?';
+        'WHERE NumArtTab = ?';
     return con.query(sql, [id], cb)
 };
 exports.getTablette = getTablette;
@@ -23,14 +23,14 @@ exports.insertTabletteWId = insertTabletteWId;
 const updateTablette = function (con, id, typeChoco, cb) {
     const sql = 'UPDATE tablettes ' +
         'SET typeChoco = ? ' +
-        'WHERE numArtTab = ?';
+        'WHERE NumArtTab = ?';
     return con.query(sql, [typeChoco, id], cb)
 };
 exports.updateTablette = updateTablette;
 
 const delTablette = function (con, id, cb) {
     const sql = 'DELETE FROM tablettes ' +
-        'WHERE numArtTab = ?';
+        'WHERE NumArtTab = ?';
     return con.query(sql, [id], cb)
 };
 exports.delTablette = delTablette;

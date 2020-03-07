@@ -111,7 +111,7 @@ const ArticlesRoute = function (article, con) {
                         }))
                     }
 
-                    if (decoded.admin === 1) {
+                    if (decoded && decoded.admin === 1) {
 // ici on veut que seul les admin puisse poster des boites qui se voient
                         art.insertArt(con, body.Prix, body.Type, decoded.admin, function (err, result) {
                             if (err) {
@@ -119,7 +119,9 @@ const ArticlesRoute = function (article, con) {
                                 res.end(err.toString())
                             }
 
+                            console.log(result);
                             result = JSON.parse(JSON.stringify(result));
+                            console.log(result);
 
                             const type = body.Type;
                             switch (type) {

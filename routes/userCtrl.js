@@ -46,8 +46,9 @@ const connexion = function (connexionUser, con) {
                             //if (resBcrypt) { // si le hash du mdp de la base correspond à celui fourni
                                 let userData = {
                                     "mail": body.mail,
-                                    "admin": result.estAdmin
+                                    "admin": result.EstAdmin
                                 };
+
                                 res.statusCode = 200;
                                 let token = jwt.sign(userData, ope.getRandStr(), {expiresIn: '2h'});
                                 res.end(JSON.stringify({

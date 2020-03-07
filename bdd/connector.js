@@ -12,5 +12,18 @@ const connectWith = function (user, mdp) {
 
     return connected
 };
-
 exports.connectWith = connectWith;
+
+const connect = function () {
+    const connected = mysql.createConnection({
+        host: "mysql-riko38nano.alwaysdata.net",
+        user: '201388',
+        password: 'IG3PolytechChocochoco',
+        database: "riko38nano_choco"
+    });
+
+    connected.connect();
+
+    return connected
+};
+exports.connect = connect;

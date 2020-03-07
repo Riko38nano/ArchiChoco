@@ -15,14 +15,14 @@ exports.getArticle = getArticle;
 
 const getType = function (con, id, cb) {
     const sql = 'SELECT Type ' +
-        'FROM articles ' +
+        'FROM Articles ' +
         'WHERE NumArt = ?';
     return con.query(sql, [id], cb)
 };
 exports.getType = getType;
 
 const insertArt = function (con, prix, type, aff, callback){
-    const sql = 'INSERT INTO Articles (prix, type, affichage)' +
+    const sql = 'INSERT INTO Articles (Prix, Type, Affichage)' +
         'VALUES (?, ?, ?)';
     return con.query(sql, [prix, type, aff], callback)
 };
@@ -30,23 +30,23 @@ exports.insertArt = insertArt;
 
 const updateArtPrix = function (con, id, prix, callback){
     const sql = 'UPDATE Articles ' +
-        'SET prix = ? ' +
-        'WHERE numArt = ?';
+        'SET Prix = ? ' +
+        'WHERE NumArt = ?';
     return con.query(sql, [prix, id], callback)
 };
 exports.updateArtPrix = updateArtPrix;
 
 const updateArtAff = function (con, id, aff, callback){
     const sql = 'UPDATE Articles ' +
-        'SET affichage = ? ' +
-        'WHERE numArt = ?';
+        'SET Affichage = ? ' +
+        'WHERE NumArt = ?';
     return con.query(sql, [aff, id], callback)
 };
 exports.updateArtAff = updateArtAff;
 
 const delArt = function (con, id, callback){
     const sql = "DELETE FROM Articles " +
-        "WHERE numArt = ?";
+        "WHERE NumArt = ?";
     return con.query(sql, [id], callback)
 };
 exports.delArt = delArt;
