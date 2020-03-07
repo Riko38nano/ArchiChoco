@@ -7,7 +7,6 @@ import {AbstractControl, FormGroup, NG_VALIDATORS, ValidationErrors, Validator, 
   providers: [{ provide: NG_VALIDATORS, useExisting: mdpMatchValidatorDirective, multi: true }]
 })
 
-// tslint:disable-next-line:class-name
 export class mdpMatchValidatorDirective implements Validator {
   validate(control: AbstractControl): ValidationErrors {
     return mdpMatchValidator(control);

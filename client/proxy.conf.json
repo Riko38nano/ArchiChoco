@@ -1,6 +1,6 @@
 {
   "/": {
-    "target": "http://localhost:8085",
+    "target": "https://archichoco.herokuapp.com",
     "secure": false,
     "changeOrigin":true
   }
