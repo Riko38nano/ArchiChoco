@@ -30,10 +30,10 @@ const connexion = function (connexionUser, con) {
                         res.end(err.toString())
                     }
 
-                    if (result.length > 0) { // si un utilisateur possède cet email, eg si la réponse ne fait pas que deux carachtere donc une reponse vide
+                    if (result.length > 0) { // si un utilisateur possède cet email
                         result = JSON.parse(JSON.stringify(result[0]));
 
-                        if (result.mdpCli === ope.decrypt(body.mdpCli)) {
+                        if (result.mdpCli === ope.decrypto(body.mdpCli)) {
                             let userData = {
                                 "mail": body.mail,
                                 "admin": result.EstAdmin

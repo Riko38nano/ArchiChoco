@@ -85,9 +85,10 @@ const getRandStr = function () {
 };
 exports.getRandStr = getRandStr;
 
-const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
 const crypt = function (mdp){
     const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
+    const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
+
     const ub = Crypto.charenc.UTF8.stringToBytes(mdp);
     const eb = Crypto.DES.encrypt(ub, key, {asBytes: true, mode: mode});
 
@@ -95,12 +96,13 @@ const crypt = function (mdp){
 };
 exports.crypt = crypt;
 
-const decrypt = function(hash) {
+const decrypto = function(hash) {
     const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
+    const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
 
     const eb = Crypto.util.hexToBytes(hash);
     const ub = Crypto.DES.decrypt(eb, key, {asBytes: true, mode: mode});
 
     return Crypto.charenc.UTF8.bytesToString(ub)
 };
-exports.decrypt = decrypt;
+exports.decrypto = decrypto;
