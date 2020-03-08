@@ -25,6 +25,18 @@ const ope = require('./bdd/operation');
 ope.genRandStr();
 
 let server = http.createServer(function onRequest(req, res) {
+
+    // header pour permettre le CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+    res.setHeader('Access-Control-Request-Method', 'GET, POST, OPTIONS, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+
+    if (req.method === "OPTIONS") {
+        res.statusCode = 200;
+        res.end();
+    }
+
     router(req, res, finalhandler(req, res))
 });
 // chemin vers les fichiers compilé d'Angular
@@ -32,32 +44,6 @@ const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
 router.use(function (req, res, next) {
     file.serve(req, res);
-
-    router.route('/Connexion')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Inscription')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Accueil')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Commandes')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Panier')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Comptabilité')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-
     next()
 });
 
@@ -147,7 +133,6 @@ router.use(function (req, res, next) {
     next()
 });
  */
-// const hostname = 'localhost';
 const port = process.env.PORT || 8085;
 
 server.listen(port, () => {
