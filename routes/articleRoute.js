@@ -5,10 +5,12 @@ const tab = require('../bdd/tables/tablette');
 
 const operation = require('../bdd/operation');
 
+// fonction qui génére les réponse en fonction des requêtes que l'Api reçoit
 const ArticlesRoute = function (article, con) {
     article
         .get(function (req, res) {
             // Get tous les articles avec les details des SousTables
+            // renvoie une objet en JSON
 
             const token = JSON.parse(JSON.stringify(req.headers)).authorization;
 
@@ -26,14 +28,15 @@ const ArticlesRoute = function (article, con) {
                         res.statusCode = 500;
                         res.end(err.toString())
                     }
-
+                    // ici result ne contient que les attributs de la tables principal, il nous faut les attributs des sous tables
                     result = JSON.parse(JSON.stringify(result));
 
                     let tabArticleExtended = [];
 
                     if (result.length > 0) {
 
-                        for (let i = 0; i < result.length; i++) { // pour chaque article que l'on trouve dans la table principal
+                        for (let i = 0; i < result.length; i++) {
+                            // pour chaque article que l'on trouve dans la table principal
                             // on veut pouvoir recuperer les attributs qu'il a dans la SousTable qui lui correspond
 
                             const type = result[i].Type;
@@ -75,19 +78,21 @@ const ArticlesRoute = function (article, con) {
                                 function cbGetTable(result2) {
                                     result2 = JSON.parse(JSON.stringify(result2[0]));
 
+                                    // dans chaque case de ce tableau on stockera les informations des articles
+                                    // result correspond à la requete sur la table principale
+                                    // result2 à la requete sur la sous table
                                     tabArticleExtended[i] = operation.createArticleExtended(result[i], result2);
 
                                     if (i === result.length - 1) {
-
+                                        // si on arrive au dernier article on renvoie la réponse
                                         res.statusCodec = 200;
                                         res.end(JSON.stringify(tabArticleExtended));
-
                                     }
                                 }
                             }
                         }
                     } else {
-                        res.statusCode = 200;
+                        res.statusCode = 404;
                         res.end()
                     }
                 })
@@ -123,17 +128,17 @@ const ArticlesRoute = function (article, con) {
                         }))
                     }
 
-                    if (decoded && decoded.admin === 1) {
-// ici on veut que seul les admin puisse poster des boites qui se voient
+                    if (decoded.admin === 1) {
+                        // ici seul les admins peuvent inserer de nouveaux articles
+                        // seul les admin peuvent poster des boites qui se voient
+                        // donc on utilise le champs admin du token pour cela, meme si ici ce champs ne peut que valoir 1
                         art.insertArt(con, body.Prix, body.Type, decoded.admin, function (err, result) {
                             if (err) {
                                 res.statusCode = 400;
                                 res.end(err.toString())
                             }
 
-                            console.log(result);
                             result = JSON.parse(JSON.stringify(result));
-                            console.log(result);
 
                             const type = body.Type;
                             switch (type) {
@@ -166,15 +171,17 @@ const ArticlesRoute = function (article, con) {
                                     break;
                                 default:
                                     res.end("Article de type inconnu");
-
                             }
 
                             function cbInsertTable(result) {
+                                // ici on ne fait que deux requete, une pour l'insertion dans la table principale
+                                // et l'autre pour la table secondaire, donc on renvoie seulement la réponse de la bdd
                                 res.statusCode = 201;
                                 res.end(JSON.stringify(result))
                             }
                         })
                     } else {
+                        // si pas admin
                         res.statusCode = 403;
                         res.end(JSON.stringify({
                             error: "Unauthorized to insert this item"

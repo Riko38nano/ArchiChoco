@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table boites
 const getBoite = function (con, id, cb) {
     const sql = 'SELECT * ' +
         'FROM boites ' +

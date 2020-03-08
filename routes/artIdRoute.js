@@ -11,6 +11,8 @@ const ArticlesRoute = function (article, con) {
         article
             .get(function (req, res) {
 
+                // cette methode sur cette route n'est pas utilisé
+                // mais fait la même chose
                 const token = JSON.parse(JSON.stringify(req.headers)).authorization;
 
                 const decoded = operation.decodeToken(token);
@@ -95,6 +97,7 @@ const ArticlesRoute = function (article, con) {
             })
             .put(function (req, res) {
 
+                // route pour modifier un article
                 const token = JSON.parse(JSON.stringify(req.headers)).authorization;
                 const decoded = operation.decodeToken(token);
                 if (decoded === null) {
@@ -120,14 +123,16 @@ const ArticlesRoute = function (article, con) {
                         }
 
                         if (decoded.admin === 1) {
-                            // on décide de ne pas pouvoir changer le type d'un article et de preferer supprimer l'article en question
+                            // on décide de ne pas pouvoir changer le type d'un article
+                            // et de preferer supprimer l'article en question
+                            // et enfin d'ajouter le nouvelle article
 
                             const id = req.url.split('/')[3];
                             let count = 1; // variable pour compter le nombre de fois où l'on rentre dans le callBack de fin
                             let nbParam = 0; // variable qui compte le nombre de paramètre non null
 
                             if ((body.chaine === null || body.chaine === '') && (body.Prix === null || body.Prix === '') && (body.Affichage === null || body.Affichage === '')) {
-                                // pas de body
+                                // si pas de body
                                 res.statusCode = 401;
                                 res.end(JSON.stringify({
                                     error: "You should send something in your body"
@@ -135,6 +140,7 @@ const ArticlesRoute = function (article, con) {
                             } else {
 
                                 if (body.chaine && body.chaine.length > 0) {
+                                    // si on veut modifier la chaine (soit typeChoco d'une tablette soit description d'un autre)
                                     nbParam += 1;
                                     art.getType(con, id, function (err, result) {
                                         if (err) {
@@ -142,13 +148,11 @@ const ArticlesRoute = function (article, con) {
                                             res.end(err.toString())
                                         }
 
-                                        console.log(result);
-
                                         result = JSON.parse(JSON.stringify(result[0]));
 
                                         const type = result.Type;
                                         switch (type) {
-                                            case "tablettes": // 3 param + 1
+                                            case "tablettes":
                                                 tab.updateTablette(con, id, body.chaine, function (error, result2) {
                                                     if (error) {
                                                         res.statusCode = 400;
@@ -157,7 +161,7 @@ const ArticlesRoute = function (article, con) {
                                                     cbUpdateTable(result2)
                                                 });
                                                 break;
-                                            case "autres": // 3 param + 1
+                                            case "autres":
                                                 autre.updateAutre(con, id, body.chaine, function (error, result2) {
                                                     if (error) {
                                                         res.statusCode = 400;
@@ -174,7 +178,8 @@ const ArticlesRoute = function (article, con) {
                                     })
                                 }
 
-                                if (body.Prix) {
+                                if (body.Prix && body.Prix !== '') {
+                                    // si on a renseigné un prix
                                     nbParam += 1;
                                     art.updateArtPrix(con, id, body.Prix, function (error, result2) {
                                         if (error) {
@@ -186,6 +191,7 @@ const ArticlesRoute = function (article, con) {
                                 }
 
                                 if (body.Affichage === 0 || body.Affichage === 1) {
+                                    // si on veut modifier l'affichage d'un article
                                     nbParam += 1;
                                     art.updateArtAff(con, id, body.Affichage, function (error, result2) {
                                         if (error) {
@@ -198,9 +204,11 @@ const ArticlesRoute = function (article, con) {
 
                                 function cbUpdateTable(result) {
                                     if (count >= nbParam) {
+                                        // si on est allé au bout des modifications que l'on souhaitait faire
                                         res.statusCode = 201;
                                         res.end(JSON.stringify(result))
                                     } else {
+                                        // sinon on augmente le nombre de fois où l'on est rentré dans le callBack
                                         count++
                                     }
                                 }
@@ -231,7 +239,8 @@ const ArticlesRoute = function (article, con) {
 
                         const id = req.url.split('/')[3];
 
-                        // pour supprimer il faut qu'aucun client n'ait commandé cet article, si une commande est en cours on placera l'attribut affichage à 0 dans article
+                        // pour supprimer il faut qu'aucun client n'ait commandé cet article,
+                        // si une commande est en cours on placera l'attribut affichage à 0 dans article
                         // ainsi on pourra afficher ou non coté FrontEnd en fonction de cet attribut
 
                         ligneCmd.getLigneByArt(con, id, function (err, result) {

@@ -105,12 +105,14 @@ export class BoiteComponent implements OnInit {
   addArt(article: Article) {
     this.boiteService.addArticle(article).subscribe(
       added => {
+        // rafiraichit la liste des articles
         this.articleListComponent.getArticlesList();
         // added.InsertId est l'identifiant de la boite créé dans la base
         this.id = added.insertId;
       },
       error => this.error = error,
       () => {
+        // ceci s'execute une fois la requête terminé, pour être sûr d'avoir un identifiant de la boite créée
         if (!this.isAdmin()) {
           // ajout de la boite du client au panier, avec ajout de l'identifiant de la base de la boite créée
           this.cartService.addToCart(article, this.id);
@@ -136,11 +138,12 @@ export class BoiteComponent implements OnInit {
       au_lait: this.getVal.auLait.value,
       praline: this.getVal.praline.value,
     };
-
     this.addArt(article);
   }
 
   is100Calcul() {
+    // fonction qui somme la liste des valeurs des parfums et s'assure que le bouton n'apparraise pas
+    // si la somme ne fait pas 100 %
     const noisette = this.getVal.noisette.value;
     const alcool = this.getVal.alcool.value;
     const blanc = this.getVal.blanc.value;

@@ -4,6 +4,7 @@ const art = require('../bdd/tables/art');
 const boite = require('../bdd/tables/boite');
 
 const boiteRoute = function (article, con) {
+    // route pour l'ajout de boite par n'importe qu'elle client
     article.post(function (req, res) {
         const token = JSON.parse(JSON.stringify(req.headers)).authorization;
 
@@ -31,6 +32,7 @@ const boiteRoute = function (article, con) {
                     }))
                 }
 // ici tous les clients peuvent poster des boites
+                // mais si c'est un admin on doit faire apparaître la boite
                 art.insertArt(con, body.Prix, body.Type, decoded.admin, function (err, result) {
                     if (err) {
                         res.statusCode = 400;

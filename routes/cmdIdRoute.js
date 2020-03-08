@@ -7,7 +7,7 @@ const operation = require('../bdd/operation');
 
 const cmdIdRoute = function(commandeId, con){
     commandeId.delete(function (req, res) {
-
+// route pour supprimer une commande
             const token = JSON.parse(JSON.stringify(req.headers)).authorization;
 
             const decoded = operation.decodeToken(token);

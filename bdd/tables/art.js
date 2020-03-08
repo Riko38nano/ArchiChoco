@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table articles
 const getArticles = function (con, callback) {
     const sql = 'SELECT NumArt, ROUND(Prix, 2) as Prix, Type, Affichage ' +
         'FROM Articles';

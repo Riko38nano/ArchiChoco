@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table autres
 const getAutre = function (con, id, callback) {
     const sql = 'SELECT * ' +
         'FROM autres ' +

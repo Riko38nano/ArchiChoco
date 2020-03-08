@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table clients
 const getClientNomPnom = function (con, id, callback) {
     const sql = 'SELECT NomCli, PnomCli ' +
         'FROM Clients ' +

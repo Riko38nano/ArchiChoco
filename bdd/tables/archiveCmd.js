@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table archiveCommandes
 const getBenef = function (con, cb) {
     const sql = 'SELECT SUM(prixTot) as benef, COUNT(idCmd) as count ' +
         'FROM archivecmd';

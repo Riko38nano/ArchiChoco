@@ -43,11 +43,6 @@ export class CommandeListComponent implements OnInit {
         if (deleted.affectedRows === 1) {
           this.getCmdList();
           this.ok = 'Suppression réussi';
-          this.info = null;
-          this.error = null;
-        } else {
-          this.ok = null;
-          this.error = null;
         }
       });
   }

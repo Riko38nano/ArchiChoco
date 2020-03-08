@@ -1,19 +1,5 @@
 const mysql = require('mysql');
-
-const connectWith = function (user, mdp) {
-    const connected = mysql.createConnection({
-        host: "localhost",
-        user: user,
-        password: mdp,
-        database: "choco"
-    });
-
-    connected.connect();
-
-    return connected
-};
-exports.connectWith = connectWith;
-
+// fonction de connexion à la base de donnée
 const connect = function () {
     const connected = mysql.createConnection({
         host: "onnjomlc4vqc55fw.chr7pe7iynqr.eu-west-1.rds.amazonaws.com",

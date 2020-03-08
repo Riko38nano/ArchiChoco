@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const ope = require('../bdd/operation');
 
 const connexion = function (connexionUser, con) {
+    // ici méthode post car modifie l'état
     connexionUser.post(function (req, res) {
         let body = [];
         req.on('data', (chunk) => {

@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table commandes
 const insertCmd = function (con, idCli, date, cons, liv, cb) {
     const sql = 'INSERT INTO Commandes (NumCli, Date, Consigne, Livraison) ' +
         'VALUES (?, ?, ?, ?)';

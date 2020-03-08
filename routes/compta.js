@@ -24,6 +24,9 @@ const comptaRoute = function (compta, con) {
                         res.end(err.toString())
                     }
 
+                    // renvoie le bénefice cad la somme de tous les prix totaux de la table archive commande
+                    // avec aussi le nombre de commandes réalisé
+
                     res.statusCode = 200;
                     res.end(JSON.stringify(result))
                 })

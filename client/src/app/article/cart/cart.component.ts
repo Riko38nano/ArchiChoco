@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
   }
 
   passerCommande() {
+    // l'utilisateur a appuyer sur le bouton passer commande
     if (this.items.length <= 0) {
       return;
     }

@@ -1,3 +1,4 @@
+// fichier contenant tous les urls de l'api
 export const location = 'https://archichoco.herokuapp.com';
 
 export const article = '/api/article';

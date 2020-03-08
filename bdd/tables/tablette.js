@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table tablettes
 const getTablette = function (con, id, cb) {
     const sql = 'SELECT * ' +
         'FROM tablettes ' +

@@ -21,15 +21,15 @@ const compta = require('./routes/compta');
 
 const ope = require('./bdd/operation');
 
+// genere une clé pour chiffré les tokens
 ope.genRandStr();
 
-let serverBack = http.createServer(function onRequest(req, res) {
+let server = http.createServer(function onRequest(req, res) {
 
+    // header pour permettre le CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
-    // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', '*');
     res.setHeader('Access-Control-Request-Method', 'GET, POST, OPTIONS, PUT, DELETE');
-    // Request headers you wish to allow
     res.setHeader('Access-Control-Allow-Headers', '*');
 
     if (req.method === "OPTIONS") {
@@ -39,11 +39,11 @@ let serverBack = http.createServer(function onRequest(req, res) {
 
     router(req, res, finalhandler(req, res))
 });
-
+// chemin vers les fichiers compilé d'Angular
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
-
+// la connexion à la bdd
 const con = moduleCo.connect();
-
+// toutes les routes de l'API
 router.use(function (req, res, next) {
     const connexionUser = router.route('/api/connexion');
     userRoute.connexion(connexionUser, con);
@@ -91,7 +91,7 @@ router.use(function (req, res, next) {
     compta.comptaRoute(comptabilite, con);
     next()
 });
-
+// Les routes vers les fichiers compilés d'Angular
 router.use(function (req, res, next) {
     router.route('*')
         .get(function (req, res) {
@@ -127,6 +127,6 @@ router.use(function (req, res, next) {
 // const hostname = 'localhost';
 const port = process.env.PORT || 8085;
 
-serverBack.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server running on :${port}/`);
 });

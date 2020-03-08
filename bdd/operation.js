@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const createArtConcat = function (Art, SousArt) {
     // fonction qui à partir d'un objet de la table principale ajoute les attributs de la sous table
+    // en évitant la répetition du NumArt
     let obj = {};
 
     for (const key in Art) {
@@ -36,6 +37,7 @@ const findDiff = function (lignes) {
 };
 exports.findDiff = findDiff;
 
+// Calcul du prix pour une commande
 const getPrixTot = function (lignesArt) {
     // fonction qui parcourt des lignes d'article et qui somme le prix de tous les articles
     let somme = 0;
@@ -46,6 +48,7 @@ const getPrixTot = function (lignesArt) {
 };
 exports.getPrixTot = getPrixTot;
 
+// verification si le token est decodable
 function decodeOk(token, str) {
     try {
         jwt.verify(token, str)
@@ -55,6 +58,7 @@ function decodeOk(token, str) {
     return true
 }
 
+// méthode de decodage des token
 const decodeToken = function (token) {
     if (decodeOk(token, randStr)) {
         return jwt.verify(token, randStr);
@@ -64,6 +68,7 @@ const decodeToken = function (token) {
 };
 exports.decodeToken = decodeToken;
 
+// fonction de test pour vérifier si le BODY est au format que l'on veut
 const isJSON = function (str) {
     try {
         JSON.parse(str);
@@ -74,6 +79,7 @@ const isJSON = function (str) {
 };
 exports.isJSON = isJSON;
 
+// génére une clé de session pour le codage des mdp
 let randStr = '';
 const genRandStr = function () {
     randStr = keygen.session_id();
@@ -85,6 +91,7 @@ const getRandStr = function () {
 };
 exports.getRandStr = getRandStr;
 
+// méthode de cryptage des mdp
 const crypt = function (mdp){
     const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
     const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
@@ -95,14 +102,3 @@ const crypt = function (mdp){
     return Crypto.util.bytesToHex(eb)
 };
 exports.crypt = crypt;
-
-const decrypto = function(hash) {
-    const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
-    const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
-
-    const eb = Crypto.util.hexToBytes(hash);
-    const ub = Crypto.DES.decrypt(eb, key, {asBytes: true, mode: mode});
-
-    return Crypto.charenc.UTF8.bytesToString(ub)
-};
-exports.decrypto = decrypto;

@@ -1,3 +1,4 @@
+// fichiers contenant toutes les requêtes SQL utilisés pour la gestion de la table ligne de commande
 const getLcdByCmd = function (con, idCmd, cb) {
     const sql = 'SELECT lcd.idArt, art.Type, art.Affichage, ROUND(art.Prix, 2) as Prix ' +
         'FROM LigneCmd as lcd INNER JOIN Articles as art ON (lcd.idArt = art.NumArt) ' +
