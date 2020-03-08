@@ -89,7 +89,7 @@ const inscription = function (inscr, con) {
                 }
 
                 if (result && result.length === 0) { // si l'email n'est pas déjà dans la base
-                    cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.crypt(body.mdp),
+                    cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.hash(body.mdp),
                         function (err, result) {
                             if (err) {
                                 res.statusCode = 400;
