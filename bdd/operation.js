@@ -1,5 +1,5 @@
 const keygen = require("keygenerator");
-const Crypto = require('cryptojs').Crypto;
+var CryptoJS = require("crypto-js");
 
 const jwt = require('jsonwebtoken');
 
@@ -94,11 +94,7 @@ exports.getRandStr = getRandStr;
 // méthode de cryptage des mdp
 const crypt = function (mdp){
     const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
-    const mode = new Crypto.mode.ECB(Crypto.pad.pkcs7);
 
-    const ub = Crypto.charenc.UTF8.stringToBytes(mdp);
-    const eb = Crypto.DES.encrypt(ub, key, {asBytes: true, mode: mode});
-
-    return Crypto.util.bytesToHex(eb)
+    return CryptoJS.AES.encrypt(mdp, key).toString()
 };
 exports.crypt = crypt;
