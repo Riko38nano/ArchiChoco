@@ -32,7 +32,7 @@ const connexion = function (connexionUser, con) {
                     if (result && result.length > 0) { // si un utilisateur possède cet email
                         result = JSON.parse(JSON.stringify(result[0]));
 
-                        console.log(result.mdpCli === ope.crypt(body.mdpCli));
+                        console.log(result.mdpCli, ope.crypt(body.mdpCli));
                         if (result.mdpCli === ope.crypt(body.mdpCli)) {
                             let userData = {
                                 "mail": body.mail,

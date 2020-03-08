@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const createArtConcat = function (Art, SousArt) {
     // fonction qui à partir d'un objet de la table principale ajoute les attributs de la sous table
-    // en évitant la répetition du NumArt
+    // En enelevant le NumArt de la sous table car déjà présent dans la table principale
     let obj = {};
 
     for (const key in Art) {
