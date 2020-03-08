@@ -83,19 +83,15 @@ const inscription = function (inscr, con) {
 
                 if (err) {
                     res.statusCode = 500;
-                    res.end(JSON.stringify({
-                        error: err.toString()
-                    }))
+                    res.end( err.toString())
                 }
 
-                if (result && result.length === 0) { // si l'email n'est pas déjà dans la base
+                if (result.length === 0) { // si l'email n'est pas déjà dans la base
                     cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.hash(body.mdp),
                         function (err, result) {
                             if (err) {
                                 res.statusCode = 400;
-                                res.end(JSON.stringify({
-                                    error: err.toString()
-                                }))
+                                res.end(err.toString())
                             }
                             res.end(JSON.stringify(result));
                         });
