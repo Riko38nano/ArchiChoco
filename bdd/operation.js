@@ -1,5 +1,5 @@
 const keygen = require("keygenerator");
-var CryptoJS = require("crypto-js");
+const CryptoJS = require("crypto-js");
 
 const jwt = require('jsonwebtoken');
 

@@ -7,6 +7,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "crypto-js": "^4.0.0",
     "cryptojs": "^2.5.3",
     "debug": "~2.6.9",
     "finalhandler": "^1.1.2",
