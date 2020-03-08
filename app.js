@@ -41,8 +41,10 @@ let server = http.createServer(function onRequest(req, res) {
 });
 // chemin vers les fichiers compilé d'Angular
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
+
 // la connexion à la bdd
 const con = moduleCo.connect();
+
 // toutes les routes de l'API
 router.use(function (req, res, next) {
     const connexionUser = router.route('/api/connexion');
@@ -91,6 +93,7 @@ router.use(function (req, res, next) {
     compta.comptaRoute(comptabilite, con);
     next()
 });
+
 // Les routes vers les fichiers compilés d'Angular
 router.use(function (req, res, next) {
     router.route('*')
