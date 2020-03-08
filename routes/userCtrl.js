@@ -33,6 +33,7 @@ const connexion = function (connexionUser, con) {
                         result = JSON.parse(JSON.stringify(result[0]));
 
                         console.log(result.mdpCli === ope.hash(body.mdpCli), result.mdpCli, ope.hash(body.mdpCli));
+                        console.log(ope.hash('Toto1234'), ope.hash(body.mdpCli) === ope.hash('Toto1234'));
                         if (result.mdpCli === ope.hash(body.mdpCli)) {
                             let userData = {
                                 "mail": body.mail,
