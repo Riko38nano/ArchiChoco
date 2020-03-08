@@ -44,6 +44,32 @@ const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
 router.use(function (req, res, next) {
     file.serve(req, res);
+
+    router.route('/Connexion')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Inscription')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Accueil')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Commandes')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Panier')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Comptabilité')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+
     next()
 });
 
