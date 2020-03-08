@@ -93,6 +93,6 @@ exports.getRandStr = getRandStr;
 
 // méthode de hashage des mdp
 const hash = function (mdp){
-    return CryptoJS.SHA256(mdp)
+    return CryptoJS.SHA256(mdp).toString(CryptoJS.enc.Hex)
 };
 exports.hash = hash;
