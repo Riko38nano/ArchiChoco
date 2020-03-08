@@ -97,7 +97,26 @@ router.use(function (req, res, next) {
         .get(function (req, res) {
             file.serve(req, res);
         });
-    next()
+    router.route('/Connexion')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Inscription')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Accueil')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Commandes')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    router.route('/Panier')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
 });
 
 // const hostname = 'localhost';
