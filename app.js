@@ -43,7 +43,9 @@ let server = http.createServer(function onRequest(req, res) {
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
 router.use(function (req, res, next) {
-    file.serve(req, res);
+    router.route('*', function (req, res) {
+        file.serve(req, res);
+    });
     next()
 });
 
