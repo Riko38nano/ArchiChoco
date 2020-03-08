@@ -32,8 +32,8 @@ const connexion = function (connexionUser, con) {
                     if (result && result.length > 0) { // si un utilisateur possède cet email
                         result = JSON.parse(JSON.stringify(result[0]));
 
-                        console.log(result.mdpCli === ope.hash(body.mdpCli), result.mdpCli, ope.hash(body.mdpCli));
-                        console.log(ope.hash('Toto1234'), ope.hash(body.mdpCli) === ope.hash('Toto1234'));
+                        console.log(result.mdpCli === ope.hash(body.mdpCli), result.mdpCli, ope.hash(body.mdpCli), body.mdpCli);
+                        console.log(ope.hash('Toto1234'), ope.hash(body.mdpCli) === ope.hash('Toto1234'), ope.hash('Toto1234') === result.mdpCli);
                         if (result.mdpCli === ope.hash(body.mdpCli)) {
                             let userData = {
                                 "mail": body.mail,
