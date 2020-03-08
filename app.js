@@ -117,6 +117,11 @@ router.use(function (req, res, next) {
         .get(function (req, res) {
             file.serve(req, res);
         });
+    router.route('/Comptabilité')
+        .get(function (req, res) {
+            file.serve(req, res);
+        });
+    next()
 });
 
 // const hostname = 'localhost';
