@@ -25,18 +25,6 @@ const ope = require('./bdd/operation');
 ope.genRandStr();
 
 let server = http.createServer(function onRequest(req, res) {
-
-    // header pour permettre le CORS
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', '*');
-    res.setHeader('Access-Control-Request-Method', 'GET, POST, OPTIONS, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', '*');
-
-    if (req.method === "OPTIONS") {
-        res.statusCode = 200;
-        res.end();
-    }
-
     router(req, res, finalhandler(req, res))
 });
 // chemin vers les fichiers compilé d'Angular
