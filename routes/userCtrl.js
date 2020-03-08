@@ -87,7 +87,7 @@ const inscription = function (inscr, con) {
                 }
 
                 if (result.length === 0) { // si l'email n'est pas déjà dans la base
-                    console.log(body, result);
+                    console.log(body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.hash(body.mdpCli));
                     cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.hash(body.mdpCli),
                         function (err, result) {
                             if (err) {
