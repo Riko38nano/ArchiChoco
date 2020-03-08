@@ -83,19 +83,20 @@ const inscription = function (inscr, con) {
 
                 if (err) {
                     res.statusCode = 500;
+                    console.log("slai");
                     res.end( err.toString())
                 }
 
-                console.log("slai");
 
                 if (result.length === 0) { // si l'email n'est pas déjà dans la base
                     cli.insertCli(con, body.mailCli, body.NomCli, body.PnomCli, body.RueCli, body.CPCli, body.VilleCli, ope.hash(body.mdp),
                         function (err, result) {
                             if (err) {
-                                res.statusCode = 400;
+                                res.statusCode = 500;
+                                console.log("slai2");
                                 res.end(err.toString())
                             }
-                            console.log("slai2");
+                            res.statusCode = 200;
                             res.end(JSON.stringify(result));
                         });
                 } else { // si l'email existe dans la base
