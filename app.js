@@ -42,13 +42,6 @@ let server = http.createServer(function onRequest(req, res) {
 // chemin vers les fichiers compilé d'Angular
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
-router.use(function (req, res, next) {
-    router.route('*', function (req, res) {
-        file.serve(req, res);
-    });
-    next()
-});
-
 // la connexion à la bdd
 const con = moduleCo.connect();
 
@@ -102,39 +95,14 @@ router.use(function (req, res, next) {
 });
 
 // Les routes vers les fichiers compilés d'Angular
-/*
 router.use(function (req, res, next) {
     router.route('*')
         .get(function (req, res) {
             file.serve(req, res);
         });
-    router.route('/Connexion')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Inscription')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Accueil')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Commandes')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Panier')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
-    router.route('/Comptabilité')
-        .get(function (req, res) {
-            file.serve(req, res);
-        });
     next()
 });
- */
+
 const port = process.env.PORT || 8085;
 
 server.listen(port, () => {
