@@ -91,10 +91,8 @@ const getRandStr = function () {
 };
 exports.getRandStr = getRandStr;
 
-// méthode de cryptage des mdp
-const crypt = function (mdp){
-    const key = 'cnudncklzscopzsqkoizaxqbuhjn,oqskl45((é""éé"""';
-
-    return CryptoJS.AES.encrypt(mdp, key).toString()
+// méthode de hashage des mdp
+const hash = function (mdp){
+    return CryptoJS.SHA256(mdp)
 };
-exports.crypt = crypt;
+exports.hash = hash;
