@@ -42,6 +42,11 @@ let server = http.createServer(function onRequest(req, res) {
 // chemin vers les fichiers compilé d'Angular
 const file = new(nodeStatic.Server)('./client/dist/chocoAngular/');
 
+router.use(function (req, res, next) {
+    file.serve(req, res);
+    next()
+});
+
 // la connexion à la bdd
 const con = moduleCo.connect();
 
@@ -95,6 +100,7 @@ router.use(function (req, res, next) {
 });
 
 // Les routes vers les fichiers compilés d'Angular
+/*
 router.use(function (req, res, next) {
     router.route('*')
         .get(function (req, res) {
@@ -126,7 +132,7 @@ router.use(function (req, res, next) {
         });
     next()
 });
-
+ */
 // const hostname = 'localhost';
 const port = process.env.PORT || 8085;
 
